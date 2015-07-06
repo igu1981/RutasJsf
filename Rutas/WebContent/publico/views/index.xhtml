@@ -1,0 +1,83 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"	          
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>Rutas de Asturias</title>
+	<h:outputStylesheet library="css" name="/styles.css" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+	<p:layoutUnit position="north"  >
+	     
+	     <p:panelGrid columns="4" styleClass="left"> 
+			 	<h:panelGroup>
+					<p:commandButton id="btnRutas" value="Descubre" type="button" />
+		   			<p:overlayPanel id="ovrutas" for="btnRutas" hideEffect="fade" appendToBody="true">
+		    			<h:form >
+		    		        <p:panelGrid columns="1" > 
+		    			    <p:commandLink id="rutasCa" value="Rutas Caminando" />
+		        			<p:commandLink id="rutasCOS" value="Rutas Costeras" />
+		        			<p:commandLink id="rutasTr" value="Rutas Trail" />
+		        			</p:panelGrid>
+		   				</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton id="btnMapa" value="Organiza" type="button" />
+		   			<p:overlayPanel id="ovpmapa" for="btnMapa" hideEffect="fade" appendToBody="true">
+		    			<h:form>
+		        			<p:commandLink id="rutas-mapa" value="Rutas en el Mapa" />
+		   				</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton id="btnZonas" value="Conecta" type="button" />
+		   			<p:overlayPanel id="ovpzonas" for="btnZonas" hideEffect="fade" appendToBody="true">
+		    			<h:form>
+		        			<p:commandLink id="zonas" value="Queda con gente para ir" />
+		   				</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton id="btnAgenda" value="Agenda" type="button" />
+		   			<p:overlayPanel id="ovagenda" for="btnAgenda" hideEffect="fade" appendToBody="true">
+		    			<h:form>
+		        			<p:calendar id="inline" value="#{agenda.calendario}" mode="inline" />
+		        		</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+			</p:panelGrid>
+			
+			<p:panelGrid columns="1" styleClass="right"> 	
+				<h:panelGroup>
+					<p:inputText style="margin-right:10px" placeholder="Search"/>
+            		<p:commandButton value="Logout" ajax="false" action="#{Login.logout}"></p:commandButton>
+                    
+				</h:panelGroup>
+			</p:panelGrid>  
+	     
+			
+	    
+            
+	     
+	     
+		</p:layoutUnit>
+		<p:layoutUnit position="center" >
+		
+				
+			
+        </p:layoutUnit>
+        
+        <p:layoutUnit position="south">
+	    </p:layoutUnit>
+		
+	</p:layout>
+</h:body>
+</html>

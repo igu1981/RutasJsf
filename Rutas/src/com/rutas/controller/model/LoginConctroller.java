@@ -1,120 +1,151 @@
 package com.rutas.controller.model;
 
-import java.io.IOException;
+
 import java.io.Serializable;
+
+import com.rutas.persitence.LoginDao;
+
+import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.faces.event.ActionEvent;
+
+import org.primefaces.context.RequestContext;
 
 
 /**
  * 
  * @author igomez
- *
+ * 
  */
 @ManagedBean(name = "Login")
 @SessionScoped
-public class LoginConctroller implements Serializable
-{
-	//------------------------- Atributos -------------------------------
-	
+public class LoginConctroller implements Serializable {
+	// ------------------------- Atributos -------------------------------
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	private int idusuarios;
 	private String username;
 	private String password;
 	
+	@EJB
+	protected LoginDao loginDao;
 	
-	//------------------------- Getters y Setters -------------------------------
 	
-		public void setPassword(String password) {
-			this.password = password;
-		}
 
-		public void setUsername(String username) {
-			this.username = username;
-		}
-
-		public String getPassword() {
-			return password;
-		}
-
-		public String getUsername() {
-			return username;
-		}
-
+	public LoginConctroller() {
 		
-
+		super();
 		
-		
-
-	//------------------------- Metodos  -------------------------------
-
-	public String logout() 
-	{  
-			
-			return "/publico/views/acceso.xhtml?faces-redirect=true";
-		
-		
+		idusuarios=-1;
 	}
-	
-	
-	public void logearse(ActionEvent actionEvent) 
-	{  
-		FacesContext ctx = FacesContext.getCurrentInstance();
-        FacesMessage msg = null;   
-          
-        if(username != null  && username.equals("ivan") && password != null  && password.equals("admin")) 
-        {  
-        	try {
-				ctx.getExternalContext().redirect("/Rutas/publico/views/index.xhtml");
-			} catch (IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-        } else {
-            msg = new FacesMessage(FacesMessage.SEVERITY_WARN, "Login Error", "Invalid credentials");
-            FacesContext.getCurrentInstance().addMessage(null, msg);
+
+	// ----------------- Getters y Setters --------------------
+
+	public int getIdusuarios() {
+		return idusuarios;
+	}
+
+	public void setIdusuarios(int idusuarios) {
+		this.idusuarios = idusuarios;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	public void setUsername(String username) {
+		this.username = username;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public String getUsername() {
+		return username;
+	}
+
+	// ------------------------- Metodos -------------------------------
+
+	public String login()
+	{
+		
+		idusuarios = loginDao.validarUser(username, password);
+        if (idusuarios!=-1) {
+           
+            return "/publico/views/index.xhtml?faces-redirect=true";
             
-            username = "";
-            password = "";
+        } else {
+            FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "Incorrecto Usuario y Passowrd",
+                            "Por favor introduce de nuevo Usuario y Password"));
+            return "/publico/views/login.xhtml?faces-redirect=true";
         }
-    }  
-	
-	public String acceso() 
-	{  
 		
-		return "/publico/views/acceso.xhtml?faces-redirect=true";
-	
-	
+		
+		
 	}
 	
-	public String registro() 
-	{  
-		
-		
+	public String logout()
+    {    
+    	
+        username="";
+        password="";
+        idusuarios=-1;
+        
+    	 return "/publico/views/index.xhtml?faces-redirect=true"; 
+      }  
+	
+    public String accesoUsuarios()
+    {    
+    	
+        
+        
+    	 return "/publico/views/login.xhtml?faces-redirect=true"; 
+      }  
+	
+	
+
+	public String acceso() {
+
+		return "/publico/views/acceso.xhtml?faces-redirect=true";
+
+	}
+
+	public String registro() {
+
 		return "/publico/views/registro.xhtml?faces-redirect=true";
 	}
-	
-	
 
-	
-	public String solicitar() 
-	{  
-		
-		
+	public String solicitar() {
+
+		return "/publico/index.xhtml?faces-redirect=true";
+	}
+
+	public String altanueva() {
+
 		return "/publico/index.xhtml?faces-redirect=true";
 	}
 	
-	public String altanueva() 
-	{  
+	public void activarDialog()
+	{
+		if(idusuarios!=-1)
+		{
+			RequestContext rc=RequestContext.getCurrentInstance();
+			rc.execute("nousuarios.show()");
 		
-		
-		return "/publico/index.xhtml?faces-redirect=true";
+		}
+		else
+		{
+			
+		}
 	}
-	
-	
+
 }

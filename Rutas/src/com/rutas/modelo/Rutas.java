@@ -3,14 +3,17 @@ package com.rutas.modelo;
 import java.io.Serializable;
 import java.util.Date;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 /**
- * Entity implementation class for Entity: Mensaje
+ * Entity implementation class for Entity: Rutas
  *
  */
 @Entity
@@ -21,17 +24,22 @@ public class Rutas implements Serializable {
 	//---------------------- Atributos --------------------
 	
 	@Id
+	@Column(name="idrutas")
 	private Long rutasId;
 	private String itinerario;
 	private int distancia;
-	private int duraccion;
+	private int duracion;
 	private String dificultad;
 	private int desnivel;
 	@Temporal(TemporalType.TIMESTAMP)
 	private Date fecha;
-	private String concejo;
 	private String ubicacion;
 	private String descripcion;
+	
+	
+	 @ManyToOne 
+	 @JoinColumn(name="concejoid")
+	 private Concejos concejo;
 	
 	
 	private static final long serialVersionUID = 1L;
@@ -76,13 +84,13 @@ public class Rutas implements Serializable {
 	}
 
 
-	public int getDuraccion() {
-		return duraccion;
+	public int getDuracion() {
+		return duracion;
 	}
 
 
-	public void setDuraccion(int duraccion) {
-		this.duraccion = duraccion;
+	public void setDuracion(int duracion) {
+		this.duracion = duracion;
 	}
 
 
@@ -116,15 +124,6 @@ public class Rutas implements Serializable {
 	}
 
 
-	public String getConcejo() {
-		return concejo;
-	}
-
-
-	public void setConcejo(String concejo) {
-		this.concejo = concejo;
-	}
-
 
 	public String getUbicacion() {
 		return ubicacion;
@@ -148,6 +147,16 @@ public class Rutas implements Serializable {
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+
+	public Concejos getConcejo() {
+		return concejo;
+	}
+
+
+	public void setConcejo(Concejos concejo) {
+		this.concejo = concejo;
 	}  
 		
    

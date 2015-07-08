@@ -2,7 +2,7 @@ package com.rutas.generic;
 
 import java.util.List;
 
-import com.rutas.modelo.Rutas;
+
 
 public interface GenericDao<T> 
 {
@@ -17,7 +17,7 @@ public interface GenericDao<T>
 
 	T update(T t);
 
-	List<Rutas> listarutas();
+	
 
 	
 

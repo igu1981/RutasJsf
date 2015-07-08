@@ -1,0 +1,110 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"	          
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+
+<h:head>
+	<title>Rutas de Asturias</title>
+	<h:outputStylesheet library="css" name="/styles.css" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+	<p:layoutUnit position="north"  >
+	     
+	     <p:panelGrid columns="4" styleClass="left"> 
+			 	<h:panelGroup>
+					<p:commandButton id="btnRutas" value="Descubre" type="button" />
+		   			<p:overlayPanel id="ovrutas" for="btnRutas" hideEffect="fade" appendToBody="true">
+		    			<h:form >
+		    		        <p:panelGrid columns="1" > 
+		    			    <p:commandLink id="rutasCa" value="Rutas Caminando" />
+		        			<p:commandLink id="rutasCOS" value="Rutas Costeras" />
+		        			<p:commandLink id="rutasTr" value="Rutas Trail" />
+		        			</p:panelGrid>
+		   				</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton id="btnMapa" value="Organiza" type="button" />
+		   			<p:overlayPanel id="ovpmapa" for="btnMapa" hideEffect="fade" appendToBody="true">
+		    			<h:form>
+		        			<p:commandLink id="rutas-mapa" value="Rutas en el Mapa" />
+		   				</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton id="btnZonas" value="Conecta" type="button" />
+		   			<p:overlayPanel id="ovpzonas" for="btnZonas" hideEffect="fade" appendToBody="true">
+		    			<h:form>
+		        			<p:commandLink id="zonas" value="Queda con gente para ir" />
+		   				</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton id="btnAgenda" value="Agenda" type="button" />
+		   			<p:overlayPanel id="ovagenda" for="btnAgenda" hideEffect="fade" appendToBody="true">
+		    			<h:form>
+		        			<p:calendar id="inline" value="#{rutasBean.fecha}" mode="inline" mindate="#{rutasBean.newDate()}">
+		        				<p:ajax event="dateSelect" listener="#{rutasBean.viewRutas()}"/>
+		        			</p:calendar>
+		        		</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+			</p:panelGrid>
+			
+			<p:panelGrid columns="1" styleClass="right"> 	
+				<h:panelGrid columns="2">
+				<h:form>
+				<p:inputText style="margin-right:10px" placeholder="Search"/>
+				</h:form>
+					<h:form>
+					<h:panelGroup 
+					>
+            		<p:commandButton value="Login" ajax="false" action="#{Login.login()}" rendered="#{Login.idusuarios ==-1}"></p:commandButton>
+            		<p:commandButton value="Logout" ajax="false" action="#{Login.logout()}" rendered="#{Login.idusuarios !=-1}"></p:commandButton>
+            		</h:panelGroup>
+                    </h:form>
+				</h:panelGrid>
+			</p:panelGrid>  
+	     
+			
+	    
+     
+		</p:layoutUnit>
+		<p:layoutUnit position="center" >
+		
+			<h:form id="form">
+			    <p:dataList value="#{rutasBean.tablaRutasDesde()}" var="concejo">
+			        <f:facet name="header">
+			            Lista de Rutas
+			        </f:facet>
+			        #{concejo.nombre} 
+			        <p:dataTable value="#{concejo.listaRutas}" var="ruta">
+			        	<p:column headerText="distancia" width="50">
+			        	<h:outputText value="#{rutasBean.distancia}" />
+			        	</p:column>
+			        	<p:column headerText="ubicacion"  width="50">
+			        	<h:outputText value="#{rutasBean.dificultad}" />
+			        	</p:column>
+		        		<p:column>
+    						<p:commandButton value="Apuntate" type="button" actionListener="#{Login.activarDialog()}"/>
+		   				</p:column>
+			      </p:dataTable> 
+			    </p:dataList>
+		    </h:form>
+        </p:layoutUnit>
+        
+        <p:layoutUnit position="south">
+	    </p:layoutUnit>
+			<p:dialog header="Participar en la Ruta" widgetVar="nousuarios" modal="true" height="100">
+    			<h:outputText value="Registrate antes de Apuntarse" />
+			</p:dialog>   
+	</p:layout>
+</h:body>
+</html>

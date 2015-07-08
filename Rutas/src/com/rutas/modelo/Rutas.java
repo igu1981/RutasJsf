@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.util.Date;
 
 import javax.persistence.Column;
+import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
@@ -18,13 +21,15 @@ import javax.persistence.TemporalType;
  */
 @Entity
 @Table(name="rutas")
-public class Rutas implements Serializable {
+@Inheritance(strategy=InheritanceType.JOINED)
+@DiscriminatorColumn(name="discriminador")
+public abstract class Rutas implements Serializable {
 
 	
 	//---------------------- Atributos --------------------
 	
 	@Id
-	@Column(name="idrutas")
+	@Column(name="rutasid")
 	private Long rutasId;
 	private String itinerario;
 	private int distancia;
@@ -35,10 +40,11 @@ public class Rutas implements Serializable {
 	private Date fecha;
 	private String ubicacion;
 	private String descripcion;
+	private String discriminador;
 	
 	
 	 @ManyToOne 
-	 @JoinColumn(name="concejoid")
+	 @JoinColumn(name="concejo_concejoid")
 	 private Concejos concejo;
 	
 	
@@ -157,6 +163,16 @@ public class Rutas implements Serializable {
 
 	public void setConcejo(Concejos concejo) {
 		this.concejo = concejo;
+	}
+
+
+	public String getDiscriminador() {
+		return discriminador;
+	}
+
+
+	public void setDiscriminador(String discriminador) {
+		this.discriminador = discriminador;
 	}  
 		
    

@@ -4,15 +4,17 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-
 import com.rutas.modelo.Concejos;
+import com.rutas.modelo.Rutas;
+import com.rutas.modelo.RutasCaminado;
 import com.rutas.persitence.ConcejosDao;
-import com.rutas.persitence.RutasDao;
+import com.rutas.persitence.RutasCaminandoDao;
+import com.rutas.persitence.RutasCosterasDao;
+import com.rutas.persitence.RutasTrailDao;
 
 @ManagedBean(name = "rutasBean")
 @SessionScoped
@@ -26,9 +28,14 @@ public class RutasController implements Serializable {
 	private String dificultad;
 	private String concejo;
 	private Date fecha;
+	private Rutas rutaselecionada;
 	
 	@EJB
-	protected RutasDao rutasDao;
+	protected RutasCaminandoDao rutascaminandoDao;
+	@EJB
+	protected RutasCosterasDao rutascosterasDao;
+	@EJB
+	protected RutasTrailDao rutastrailDao;
 	@EJB
 	protected ConcejosDao concejosDao;
 
@@ -90,16 +97,6 @@ public class RutasController implements Serializable {
 	}
 
 
-
-	public RutasDao getRutasDao() {
-		return rutasDao;
-	}
-
-
-
-	public void setRutasDao(RutasDao rutasDao) {
-		this.rutasDao = rutasDao;
-	}
 	
 	public Date getFecha() {
 		return fecha;
@@ -107,6 +104,36 @@ public class RutasController implements Serializable {
 
 	public void setFecha(Date fecha) {
 		this.fecha = fecha;
+	}
+	public Rutas getRutaselecionada() {
+		return rutaselecionada;
+	}
+
+	public void setRutaselecionada(Rutas rutaselecionada) {
+		this.rutaselecionada = rutaselecionada;
+	}
+	public RutasCaminandoDao getRutascaminandoDao() {
+		return rutascaminandoDao;
+	}
+
+	public void setRutascaminandoDao(RutasCaminandoDao rutascaminandoDao) {
+		this.rutascaminandoDao = rutascaminandoDao;
+	}
+
+	public RutasCosterasDao getRutascosterasDao() {
+		return rutascosterasDao;
+	}
+
+	public void setRutascosterasDao(RutasCosterasDao rutascosterasDao) {
+		this.rutascosterasDao = rutascosterasDao;
+	}
+
+	public RutasTrailDao getRutastrailDao() {
+		return rutastrailDao;
+	}
+
+	public void setRutastrailDao(RutasTrailDao rutastrailDao) {
+		this.rutastrailDao = rutastrailDao;
 	}
 	
 	//--------------------- Metodos ----------------------
@@ -135,5 +162,14 @@ public class RutasController implements Serializable {
 	{
 		return concejosDao.rutasDesde(fecha);
 	}
+	
+	public List<RutasCaminado>listaRutasCaminado()
+	{
+		return rutascaminandoDao.findAll();
+	}
+
+	
+
+	
 }
 

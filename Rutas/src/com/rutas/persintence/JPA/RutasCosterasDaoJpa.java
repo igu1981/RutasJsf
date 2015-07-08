@@ -1,0 +1,20 @@
+package com.rutas.persintence.JPA;
+
+import java.util.List;
+
+import javax.ejb.Stateless;
+
+import com.rutas.generic.GenericDaoJpa;
+import com.rutas.modelo.RutasCosteras;
+import com.rutas.persitence.RutasCosterasDao;
+
+@Stateless
+public class RutasCosterasDaoJpa  extends GenericDaoJpa<RutasCosteras> implements RutasCosterasDao{
+
+	@Override
+	public List<RutasCosteras> listaRutasCosteras() {
+		
+		return findAll();
+	}
+
+}

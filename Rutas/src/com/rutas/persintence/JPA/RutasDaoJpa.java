@@ -13,15 +13,10 @@ import com.rutas.persitence.RutasDao;
 public class RutasDaoJpa extends GenericDaoJpa<Rutas> implements RutasDao{
 
 	
+	
 
 	@Override
 	public List<Rutas> listaRutas() {
-	
-		return findAll();
-	}
-
-	@Override
-	public List<Rutas> listarutas() {
 		// TODO Auto-generated method stub
 		return null;
 	}

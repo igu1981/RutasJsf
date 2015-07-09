@@ -6,6 +6,8 @@ import java.util.Date;
 import javax.persistence.Column;
 import javax.persistence.DiscriminatorColumn;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Inheritance;
 import javax.persistence.InheritanceType;
@@ -30,6 +32,7 @@ public abstract class Rutas implements Serializable {
 	
 	@Id
 	@Column(name="rutasid")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
 	private Long rutasId;
 	private String itinerario;
 	private int distancia;

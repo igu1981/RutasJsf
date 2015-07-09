@@ -4,13 +4,18 @@ import java.io.IOException;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
 import com.rutas.modelo.Concejos;
 import com.rutas.modelo.Rutas;
 import com.rutas.modelo.RutasCaminado;
+import com.rutas.modelo.RutasCosteras;
+import com.rutas.modelo.RutasTrail;
 import com.rutas.persitence.ConcejosDao;
 import com.rutas.persitence.RutasCaminandoDao;
 import com.rutas.persitence.RutasCosterasDao;
@@ -26,7 +31,12 @@ public class RutasController implements Serializable {
 	private Long rutasId;
 	private int distancia;
 	private String dificultad;
+	private String itinerario;
+	private int desnivel;
+	private String ubicacion;
+	private String descripcion;
 	private String concejo;
+	private int duracion;
 	private Date fecha;
 	private Rutas rutaselecionada;
 	
@@ -42,8 +52,18 @@ public class RutasController implements Serializable {
 	
 	
 	//--------------------- Constructor ----------------------
-	public RutasController() {
+	public RutasController() 
+	{
 		super();
+		dificultad="";
+		distancia=0;
+		ubicacion="";
+		descripcion="";
+		concejo="";
+		duracion=0;
+		itinerario="";
+		
+		
 	}
 
 	//--------------------- Getters y Setters ----------------------
@@ -136,6 +156,45 @@ public class RutasController implements Serializable {
 		this.rutastrailDao = rutastrailDao;
 	}
 	
+	public String getItinerario() {
+		return itinerario;
+	}
+
+	public void setItinerario(String itinerario) {
+		this.itinerario = itinerario;
+	}
+
+	public int getDesnivel() {
+		return desnivel;
+	}
+
+	public void setDesnivel(int desnivel) {
+		this.desnivel = desnivel;
+	}
+
+	public String getUbicacion() {
+		return ubicacion;
+	}
+
+	public void setUbicacion(String ubicacion) {
+		this.ubicacion = ubicacion;
+	}
+
+	public String getDescripcion() {
+		return descripcion;
+	}
+
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+	public int getDuracion() {
+		return duracion;
+	}
+
+	public void setDuracion(int duracion) {
+		this.duracion = duracion;
+	}
+	
 	//--------------------- Metodos ----------------------
 	
 	public List<Concejos> tablaRutas()
@@ -168,8 +227,62 @@ public class RutasController implements Serializable {
 		return rutascaminandoDao.findAll();
 	}
 
+	public List<RutasCosteras>listaRutasCosteras()
+	{
+		return rutascosterasDao.findAll();
+	}
+	
+	public List<RutasTrail>listaRutasTrail()
+	{
+		return rutastrailDao.findAll();
+	}
+	public String rutasCaminando()
+	{
+		return "/publico/comun/rutas-caminando.xhtml?faces-redirect=true";
+	}
+	public String rutasCosteras()
+	{
+		return "/publico/comun/rutas-costeras.xhtml?faces-redirect=true";
+	}
+	public String rutasTrail()
+	{
+		return "/publico/comun/rutas-trail.xhtml?faces-redirect=true";
+	}
+	
+	public String añadirRutaCaminando()
+	{
+		RutasCaminado rc = new RutasCaminado();
+		rc.setDesnivel(desnivel);
+		rc.setDificultad(dificultad);
+		rc.setDistancia(distancia);
+		rc.setUbicacion(ubicacion);
+		rc.setDescripcion(descripcion);
+		rc.setDescripcion(descripcion);
+		rc.setFecha(fecha);
+		rc.setItinerario(itinerario);
+		
+		
+		rutascaminandoDao.create(rc);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Ruta tipo caminando Añadida!!."));
+		dificultad="";
+		distancia=0;
+		ubicacion="";
+		descripcion="";
+		concejo="";
+		duracion=0;
+		itinerario="";
+		
+		return "/publico/comun/rutas-caminando.xhtml?faces-redirect=true";
+	}
+	
+	public String busquedaRutasCaminando()
+	{
+		return "/publico/comun/rutas-caminando.xhtml?faces-redirect=true";
+	}
+
 	
 
+	
 	
 }
 

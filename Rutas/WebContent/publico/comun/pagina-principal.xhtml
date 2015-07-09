@@ -20,7 +20,61 @@
 	</div>
 	
 	<h:form id="form">
-	<p:carousel value="#{rutasBean.listaRutasCaminado()}" headerText="RUTAS" var="rutas" itemStyle="height:200px;text-align:center" 
+	<p:carousel value="#{rutasBean.listaRutasCaminado()}" headerText="CAMINANDO" var="rutas" itemStyle="height:200px;text-align:center" 
+	            numVisible="1" easing="easeOutBounce" style="width:250px" cricular="true">
+        <h:panelGrid columns="2" style="width:100%" columnClasses="label,value">
+            
+            <h:outputText value="Concejo:" />
+            <h:outputText value="#{rutas.concejo.nombre}" />
+ 
+            <h:outputText value="Distancia: " />
+            <h:outputText value="#{rutas.distancia}" />
+ 
+            <h:outputText value="Dificultad:" />
+            <h:outputText value="#{rutas.dificultad}" style="color:#{car.color}"/>
+ 
+            <h:outputText value="Fecha: " />
+            <h:outputText value="#{rutas.fecha}" />
+            
+            <h:outputText value="Calzado: " />
+            <h:outputText value="#{rutas.tipoCalzado}" />
+ 
+            <f:facet name="footer">
+                <p:commandButton update=":form:rutasDialog" oncomplete="PF('rutasDialog').show()" icon="ui-icon-search">
+                    <f:setPropertyActionListener value="#{rutas}" target="#{rutasBean.rutaselecionada}" />
+                </p:commandButton>
+            </f:facet>
+        </h:panelGrid>
+    </p:carousel> 
+    
+    <p:carousel value="#{rutasBean.listaRutasCosteras()}" headerText="COSTERAS" var="rutas" itemStyle="height:200px;text-align:center" 
+	            numVisible="1" easing="easeOutBounce" style="width:250px" cricular="true">
+        <h:panelGrid columns="2" style="width:100%" columnClasses="label,value">
+            
+            <h:outputText value="Concejo:" />
+            <h:outputText value="#{rutas.concejo.nombre}" />
+ 
+            <h:outputText value="Distancia: " />
+            <h:outputText value="#{rutas.distancia}" />
+ 
+            <h:outputText value="Dificultad:" />
+            <h:outputText value="#{rutas.dificultad}" style="color:#{car.color}"/>
+ 
+            <h:outputText value="Fecha: " />
+            <h:outputText value="#{rutas.fecha}" />
+            
+            <h:outputText value="Calzado: " />
+            <h:outputText value="#{rutas.tipoCalzado}" />
+ 
+            <f:facet name="footer">
+                <p:commandButton update=":form:rutasDialog" oncomplete="PF('rutasDialog').show()" icon="ui-icon-search">
+                    <f:setPropertyActionListener value="#{rutas}" target="#{rutasBean.rutaselecionada}" />
+                </p:commandButton>
+            </f:facet>
+        </h:panelGrid>
+    </p:carousel> 
+    
+    <p:carousel value="#{rutasBean.listaRutasTrail()}" headerText="TRAIL" var="rutas" itemStyle="height:200px;text-align:center" 
 	            numVisible="1" easing="easeOutBounce" style="width:250px" cricular="true">
         <h:panelGrid columns="2" style="width:100%" columnClasses="label,value">
             

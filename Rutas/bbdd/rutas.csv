@@ -1,0 +1,12 @@
+rutasid,itinerario,distancia,duracion,dificultad,desnivel,fecha,ubicacion,descripcion,discriminador,concejo_concejoid,usuarios_usuariosid
+1,valdes,8,2,facil,250,2015-09-12,valdes,"facil de realizar",caminando,1,1
+2,gijon,4,1,facil,400,2015-10-01,gijon,"facil de realizar",caminando,2,3
+3,siero,9,2,media,350,2015-09-25,siero,bonita,caminando,7,2
+4,potes,10,3,dificil,250,2015-12-12,potes,"previo entrenamiento",costera,6,1
+5,llanes,5,1,facil,100,2015-08-15,llanes,"facil de realizar",costera,3,2
+6,gijon,15,3,dificil,700,2015-10-22,gijon,"previo entrenamiento",trail,2,3
+7,somiendo,20,4,media,600,2015-11-02,somiedo,"previo entrenamiento",trail,5,3
+8,aller,16,3,facil,350,2015-09-12,aller,"previo entrenamiento",trail,9,2
+9,aviles,6,1,facil,220,2015-07-18,aviles,"facil de realizar",costera,8,1
+10,villaviciosa,3,1,media,100,2015-08-22,villaviciosa,"facil de realizar",caminando,2,2
+11,someido,11,2,media,460,2015-07-22,somiedo,"previo entrenamiento",trail,5,1

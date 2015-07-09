@@ -1,0 +1,178 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"	          
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:c="http://java.sun.com/jsp/jstl/core">
+
+<h:head>
+	<title>Rutas Caminando</title>
+	<h:outputStylesheet library="css" name="/styles.css" />
+</h:head>
+<h:body>
+	<p:layout fullPage="true">
+	<p:layoutUnit position="north"  >
+	     
+	     <p:panelGrid columns="4" styleClass="left"> 
+			 	<h:panelGroup>
+					<p:commandButton id="btnRutas" value="Descubre" type="button" />
+		   			<p:overlayPanel id="ovrutas" for="btnRutas" hideEffect="fade" appendToBody="true">
+		    			<h:form >
+		    		        <p:panelGrid columns="1" > 
+		    			    <p:commandLink id="rutasCa" value="Rutas Caminando" action="#{rutasBean.rutasCaminando()}"/>
+		        			<p:commandLink id="rutasCOS" value="Rutas Costeras" action="#{rutasBean.rutasCosteras()}"/>
+		        			<p:commandLink id="rutasTr" value="Rutas Trail" action="#{rutasBean.rutasTrail()}"/>
+		        			</p:panelGrid>
+		   				</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton id="btnMapa" value="Organiza" type="button" />
+		   			<p:overlayPanel id="ovpmapa" for="btnMapa" hideEffect="fade" appendToBody="true">
+		    			<h:form>
+		        			<p:commandLink id="rutas-mapa" value="Rutas en el Mapa" />
+		   				</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton id="btnZonas" value="Conecta" type="button" />
+		   			<p:overlayPanel id="ovpzonas" for="btnZonas" hideEffect="fade" appendToBody="true">
+		    			<h:form>
+		        			<p:commandLink id="zonas" value="Queda con gente para ir" />
+		   				</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+				<h:panelGroup>
+					<p:commandButton id="btnAgenda" value="Agenda" type="button" />
+		   			<p:overlayPanel id="ovagenda" for="btnAgenda" hideEffect="fade" appendToBody="true">
+		    			<h:form>
+		        			<p:calendar id="inline" value="#{rutasBean.fecha}" mode="inline" mindate="#{rutasBean.newDate()}">
+		        				<p:ajax event="dateSelect" listener="#{rutasBean.viewRutas()}"/>
+		        			</p:calendar>
+		        		</h:form>
+		   			</p:overlayPanel>
+				</h:panelGroup>
+			</p:panelGrid>
+			
+			<p:panelGrid columns="1" styleClass="right"> 	
+				<h:panelGrid columns="2">
+				<h:form>
+				<p:inputText style="margin-right:10px" placeholder="Search"/>
+				</h:form>
+					<h:form>
+					<h:panelGroup 
+					>
+            		<p:commandButton value="Login" ajax="false" action="#{Login.login()}" rendered="#{Login.idusuarios ==-1}"></p:commandButton>
+            		<p:commandButton value="Logout" ajax="false" action="#{Login.logout()}" rendered="#{Login.idusuarios !=-1}"></p:commandButton>
+            		</h:panelGroup>
+                    </h:form>
+				</h:panelGrid>
+			</p:panelGrid>  
+		</p:layoutUnit>
+		<p:layoutUnit position="center" >
+		<p:panelGrid columns="2" styleClass="w100" columnClasses="w50,w50">
+		<p:fieldset legend="Rutas Caminando" style="margin-bottom:20px" >
+		<h:form id="rutascaminando">
+    		<p:accordionPanel value="#{rutasBean.listaRutasCaminado()}" var="caminando">
+        		<p:tab title="Ruta - #{caminando.rutasId}">
+           		<h:panelGrid columns="2" cellpadding="5">
+               	 	               
+                	<h:outputText value="Distancia:" style="font-weight: bold" />
+                	<h:outputText value="#{caminando.distancia}" />
+ 
+                	<h:outputText value="Dificultad:" style="font-weight: bold" />
+                	<h:outputText value="#{caminando.dificultad}" />
+ 
+                	<h:outputText value="Ubicacion:" style="font-weight: bold" />
+                	<h:outputText value="#{caminando.ubicacion}" />
+            	</h:panelGrid>
+        		</p:tab>
+   			</p:accordionPanel>
+			</h:form>
+		</p:fieldset>	
+		<p:fieldset legend="Añade una Nueva" style="margin-bottom:20px">
+		<h:form>
+		   <p:growl id="msgs" showDetail="true" />
+		       <p:panelGrid columns="2">
+		        <h:outputLabel for="itinerario" value="Itinerario:" />
+				<p:inputText id="itinerario" value="#{rutasBean.itinerario}" required="true"/>
+				<h:outputLabel for="distancia" value="Distancia:" />
+				
+				<h:panelGrid columns="2" style="margin-bottom: 10px">
+        			<p:inputText id="distancia" value="#{rutasBean.distancia}" readonly="true"/>
+        			<p:slider for="distancia" style="width:100px" minValue="0" maxValue="100"/>
+   				 </h:panelGrid>
+				<h:outputLabel for="duracion" value="Duracion:" />
+				<h:panelGrid columns="2" style="margin-bottom: 10px">
+        			<p:inputText id="duracion" value="#{rutasBean.duracion}" readonly="true" />
+        			<p:slider for="duracion" style="width:100px" minValue="0"  maxValue="24"/>
+   				 </h:panelGrid>
+				<h:outputLabel for="desnivel" value="Desnivel:" />
+				<h:panelGrid columns="2" style="margin-bottom: 10px">
+        			<p:inputText id="desnivel" value="#{rutasBean.desnivel}" readonly="true"/>
+        			<p:slider for="desnivel" style="width:100px" minValue="0" maxValue="2000"/>
+   				 </h:panelGrid>
+				<h:outputLabel for="ubicacion" value="Ubicacion:" />
+				<p:inputText id="ubicacion" value="#{rutasBean.ubicacion}" required="true"/>
+				<h:outputLabel for="descripcion" value="Descripcion:" />
+				<p:inputText id="descripcion" value="#{rutasBean.descripcion}" required="true"/>
+				<p:outputLabel for="fecha" value="Fecha:" />
+        		<p:calendar id="fecha" value="#{rutasBean.fecha}" showOn="button" />
+				</p:panelGrid>
+   			    
+                <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+        		<p:outputLabel for="console" value="Dificultad:" />
+        		<p:selectOneMenu id="console" value="#{rutasBean.dificultad}" style="width:125px">
+            	<f:selectItem itemLabel="" itemValue="" />
+            	<f:selectItem itemLabel="Facil" itemValue="Facil" />
+            	<f:selectItem itemLabel="Media" itemValue="Media" />
+            	<f:selectItem itemLabel="Dificil" itemValue="Dificil" />	
+        	</p:selectOneMenu>
+        	<p:commandButton value="Guardar" update=":rutascaminando msgs" actionListener="#{rutasBean.añadirRutaCaminando()}" styleClass="right"/>
+        	</h:panelGrid>
+        	</h:form>
+        	
+		</p:fieldset> 
+		</p:panelGrid>
+		<p:panelGrid columns="2">
+		<h:form id="filtro">
+					<p:fieldset legend="Filtro de Busqueda" style="margin-bottom:20px">
+					
+				     <h:panelGrid columns="2" cellpadding="5">
+					 <p:outputLabel value="Filtrar por palabras: " />
+					 <p:inputText value="#{rutasBean.busquedaRutasCaminando()}"></p:inputText>
+					 
+					 <div class="buscar">
+					 <p:commandButton  update=":filtro" value="Buscar" type="button" onclick="PF('dlg2').show();" />
+					 </div>
+					 
+					</h:panelGrid>
+					 
+					</p:fieldset>
+				</h:form>
+		<p:dialog header="Filtro de Mensajes" widgetVar="dlg2" modal="true" height="100" appendTo="@(body)">
+                  <h:form>
+                     <p:dataTable var="ruta" value="#{rutasBean.listaRutasCaminado()}">
+					    <p:column headerText="Distancia">
+					        <h:outputText value="#{ruta.distancia}" />
+					    </p:column>
+					 
+					    <p:column headerText="Duracion">
+					        <h:outputText value="#{ruta.duracion}" />
+					    </p:column>
+					</p:dataTable>
+					 
+				</h:form>	 
+        </p:dialog>  
+		</p:panelGrid>	
+        </p:layoutUnit>
+        
+        <p:layoutUnit position="south">
+	    </p:layoutUnit>
+		
+	</p:layout>
+</h:body>
+</html>

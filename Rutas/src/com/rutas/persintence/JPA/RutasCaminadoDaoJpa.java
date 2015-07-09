@@ -18,4 +18,10 @@ public class RutasCaminadoDaoJpa extends GenericDaoJpa<RutasCaminado> implements
 		return findAll();
 	}
 
+	@Override
+	public List<RutasCaminado> searchDao(String filtBusqueda, boolean estado) {
+		
+		return null;
+	}
+
 }

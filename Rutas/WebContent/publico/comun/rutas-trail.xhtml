@@ -9,7 +9,7 @@
 	xmlns:c="http://java.sun.com/jsp/jstl/core">
 
 <h:head>
-	<title>Rutas de Trail</title>
+	<title>Rutas Trail</title>
 	<h:outputStylesheet library="css" name="/styles.css" />
 </h:head>
 <h:body>
@@ -71,16 +71,132 @@
                     </h:form>
 				</h:panelGrid>
 			</p:panelGrid>  
-	     
-			
-	    
-            
-	     
-	     
 		</p:layoutUnit>
 		<p:layoutUnit position="center" >
 		
+    				
+		<p:panelGrid columns="2" styleClass="w100" columnClasses="w50,w50">
+		<p:fieldset legend="Rutas Trail" style="margin-bottom:20px" >
+		<h:form id="tabla">
+           <p:dataTable id="singleDT" var="trail" value="#{rutasBean.listaRutasTrail()}" rows="10"
+                         paginator="true" selection="#{rutasBean.selectedRutasTrail}" rowKey="#{trail.rutasId}"
+                         paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                         rowsPerPageTemplate="5,10,15" selectionMode="single">
+                         
+		    <p:column headerText="Distancia">
+		        <h:outputText value="#{trail.distancia}" />
+		    </p:column>
+		 
+		    <p:column headerText="Duracion">
+		        <h:outputText value="#{trail.duracion}" />
+		    </p:column>
+		 
+		    <p:column headerText="Fecha">
+		        <h:outputText value="#{trail.fecha}" />
+		    </p:column>
+		 
+		    <p:column headerText="Ubicacion">
+		        <h:outputText value="#{trail.ubicacion}" />
+		    </p:column>
+		     <f:facet name="footer">
+            <p:commandButton  update=":tabla:traildialog" icon="ui-icon-search" value="View" oncomplete="PF('trailDialog').show()" />
+       		 </f:facet>
+		</p:dataTable>
+		<p:dialog id="traildialog" header="Detalle Ruta" widgetVar="trailDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" appendTo="@(body)">
+       				 <p:outputPanel id="trailDetail" style="text-align:center;">
+			            <p:panelGrid  columns="2" rendered="#{not empty rutasBean.selectedRutasTrail}" columnClasses="label,value">
+			                
+			                <h:outputText value="Descripcion:" />
+			                <h:outputText value="#{rutasBean.selectedRutasTrail.descripcion}" />
 			 
+			                <h:outputText value="Ubicacion:" />
+			                <h:outputText value="#{rutasBean.selectedRutasTrail.ubicacion}" />
+			 
+			                
+			            </p:panelGrid>
+			        </p:outputPanel>
+    </p:dialog>
+		</h:form>
+		</p:fieldset>	
+		<p:fieldset legend="Añade una Nueva" style="margin-bottom:20px">
+		<h:form id="rutastrail">
+		   <p:growl id="msgs" showDetail="true" />
+		       <p:panelGrid columns="2">
+		        <h:outputLabel for="itinerario" value="Itinerario:" />
+				<p:inputText id="itinerario" value="#{rutasBean.itinerario}" required="true"/>
+				<h:outputLabel for="distancia" value="Distancia:" />
+				
+				<h:panelGrid columns="2" style="margin-bottom: 10px">
+        			<p:inputText id="distancia" value="#{rutasBean.distancia}" readonly="true"/>
+        			<p:slider for="distancia" style="width:100px" minValue="0" maxValue="100"/>
+   				 </h:panelGrid>
+				<h:outputLabel for="duracion" value="Duracion:" />
+				<h:panelGrid columns="2" style="margin-bottom: 10px">
+        			<p:inputText id="duracion" value="#{rutasBean.duracion}" readonly="true" />
+        			<p:slider for="duracion" style="width:100px" minValue="0"  maxValue="24"/>
+   				 </h:panelGrid>
+				<h:outputLabel for="desnivel" value="Desnivel:" />
+				<h:panelGrid columns="2" style="margin-bottom: 10px">
+        			<p:inputText id="desnivel" value="#{rutasBean.desnivel}" readonly="true"/>
+        			<p:slider for="desnivel" style="width:100px" minValue="0" maxValue="2000"/>
+   				 </h:panelGrid>
+				<h:outputLabel for="ubicacion" value="Ubicacion:" />
+				<p:inputText id="ubicacion" value="#{rutasBean.ubicacion}" required="true"/>
+				<h:outputLabel for="descripcion" value="Descripcion:" />
+				<p:inputText id="descripcion" value="#{rutasBean.descripcion}" required="true"/>
+				<p:outputLabel for="fecha" value="Fecha:" />
+        		<p:calendar id="fecha" value="#{rutasBean.fecha}" showOn="button" />
+				</p:panelGrid>
+   			    
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        		<p:outputLabel for="console" value="Dificultad:" />
+        		<p:selectOneMenu id="console" value="#{rutasBean.dificultad}" style="width:125px">
+            	<f:selectItem itemLabel="" itemValue="" />
+            	<f:selectItem itemLabel="Facil" itemValue="Facil" />
+            	<f:selectItem itemLabel="Media" itemValue="Media" />
+            	<f:selectItem itemLabel="Dificil" itemValue="Dificil" />	
+        	</p:selectOneMenu>
+        	<h:outputLabel for="tipocalzado" value="Tipo de Calzado:" />
+			<p:inputText id="tipocalzado" value="#{rutasBean.tipocalzado}" required="tru"/>
+			<h:panelGroup></h:panelGroup>
+			<p:commandButton value="Guardar" update=":rutastrail msgs" actionListener="#{rutasBean.añadirTrail()}" styleClass="right"/>
+        	</h:panelGrid>
+        	
+        	</h:form>
+        	
+		</p:fieldset> 
+		</p:panelGrid>
+		<p:panelGrid columns="2">
+		<h:form id="filtro">
+					<p:fieldset legend="Filtro de Busqueda" style="margin-bottom:20px">
+					
+				     <h:panelGrid columns="2" cellpadding="5">
+					 <p:outputLabel value="Filtrar por palabras: " />
+					 <p:inputText value="#{rutasBean.busquedaRutasCosteras()}"></p:inputText>
+					 
+					 <div class="buscar">
+					 <p:commandButton  update=":filtro" value="Buscar" type="button" onclick="PF('dlg2').show();" />
+					 </div>
+					 
+					</h:panelGrid>
+					 
+					</p:fieldset>
+				</h:form>
+		<p:dialog header="Filtro de Mensajes" widgetVar="dlg2" modal="true" height="100" appendTo="@(body)">
+                  <h:form>
+                     <p:dataTable var="ruta" value="#{rutasBean.listaRutasCosteras()}">
+					    <p:column headerText="Distancia">
+					        <h:outputText value="#{ruta.distancia}" />
+					    </p:column>
+					 
+					    <p:column headerText="Duracion">
+					        <h:outputText value="#{ruta.duracion}" />
+					    </p:column>
+					</p:dataTable>
+					 
+				</h:form>	 
+        </p:dialog>  
+		</p:panelGrid>	
         </p:layoutUnit>
         
         <p:layoutUnit position="south">

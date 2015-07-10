@@ -71,16 +71,112 @@
                     </h:form>
 				</h:panelGrid>
 			</p:panelGrid>  
-	     
-			
-	    
-            
-	     
-	     
 		</p:layoutUnit>
 		<p:layoutUnit position="center" >
-		
-			 
+		<p:panelGrid columns="2" styleClass="w100" columnClasses="w50,w50">
+		<p:fieldset legend="Rutas Costeras" style="margin-bottom:20px" >
+		<h:form id="rutascosteras">    
+			   <p:dataTable var="costeras" value="#{rutasBean.listaRutasCosteras()}" widgetVar="TablaCosteras"
+                 emptyMessage="no existe con ese criterio" filteredValue="#{rutasBean.filteredCosteras}">
+				 
+				       <f:facet name="header">
+				             <p:outputPanel>
+				                <h:outputText value="Busqueda por todos las rutas:" />
+				                <p:inputText id="globalFilter" onkeyup="PF('TablaCosteras').filter()" style="width:150px" placeholder="Enter keyword"/>
+				            </p:outputPanel>
+				        </f:facet>
+ 
+				        <p:column filterBy="#{costeras.distancia}" headerText="Distancia" footerText="contains" filterMatchMode="contains">
+				            <h:outputText value="#{costeras.distancia}" />
+				        </p:column>
+				        <p:column filterBy="#{costeras.duracion}" headerText="Duracion" footerText="contains" filterMatchMode="contains">
+				            <h:outputText value="#{costeras.duracion}" />
+				        </p:column>
+				        <p:column filterBy="#{costeras.ubicacion}" headerText="Ubicacion" footerText="contains" filterMatchMode="contains">
+				            <h:outputText value="#{costeras.ubicacion}" />
+				        </p:column>
+				        
+				</p:dataTable>
+			</h:form>
+		</p:fieldset>	
+		<p:fieldset legend="Añade una Nueva" style="margin-bottom:20px">
+		<h:form>
+		   <p:growl id="msgs" showDetail="true" />
+		       <p:panelGrid columns="2">
+		        <h:outputLabel for="itinerario" value="Itinerario:" />
+				<p:inputText id="itinerario" value="#{rutasBean.itinerario}" required="true"/>
+				<h:outputLabel for="distancia" value="Distancia:" />
+				
+				<h:panelGrid columns="2" style="margin-bottom: 10px">
+        			<p:inputText id="distancia" value="#{rutasBean.distancia}" readonly="true"/>
+        			<p:slider for="distancia" style="width:100px" minValue="0" maxValue="100"/>
+   				 </h:panelGrid>
+				<h:outputLabel for="duracion" value="Duracion:" />
+				<h:panelGrid columns="2" style="margin-bottom: 10px">
+        			<p:inputText id="duracion" value="#{rutasBean.duracion}" readonly="true" />
+        			<p:slider for="duracion" style="width:100px" minValue="0"  maxValue="24"/>
+   				 </h:panelGrid>
+				<h:outputLabel for="desnivel" value="Desnivel:" />
+				<h:panelGrid columns="2" style="margin-bottom: 10px">
+        			<p:inputText id="desnivel" value="#{rutasBean.desnivel}" readonly="true"/>
+        			<p:slider for="desnivel" style="width:100px" minValue="0" maxValue="2000"/>
+   				 </h:panelGrid>
+				<h:outputLabel for="ubicacion" value="Ubicacion:" />
+				<p:inputText id="ubicacion" value="#{rutasBean.ubicacion}" required="true"/>
+				<h:outputLabel for="descripcion" value="Descripcion:" />
+				<p:inputText id="descripcion" value="#{rutasBean.descripcion}" required="true"/>
+				<p:outputLabel for="fecha" value="Fecha:" />
+        		<p:calendar id="fecha" value="#{rutasBean.fecha}" showOn="button" />
+				</p:panelGrid>
+   			    
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
+        		<p:outputLabel for="console" value="Dificultad:" />
+        		<p:selectOneMenu id="console" value="#{rutasBean.dificultad}" style="width:125px">
+            	<f:selectItem itemLabel="" itemValue="" />
+            	<f:selectItem itemLabel="Facil" itemValue="Facil" />
+            	<f:selectItem itemLabel="Media" itemValue="Media" />
+            	<f:selectItem itemLabel="Dificil" itemValue="Dificil" />	
+        	</p:selectOneMenu>
+        	<h:outputLabel for="tipocalzado" value="Tipo de Calzado:" />
+			<p:inputText id="tipocalzado" value="#{rutasBean.tipocalzado}" required="tru"/>
+			<h:panelGroup></h:panelGroup>
+			<p:commandButton value="Guardar" update=":rutascosteras msgs" actionListener="#{rutasBean.añadirRutaCosteras()}" styleClass="right"/>
+        	</h:panelGrid>
+        	</h:form>
+        	
+		</p:fieldset> 
+		</p:panelGrid>
+		<p:panelGrid columns="2">
+		<h:form id="filtro">
+					<p:fieldset legend="Filtro de Busqueda" style="margin-bottom:20px">
+					
+				     <h:panelGrid columns="2" cellpadding="5">
+					 <p:outputLabel value="Filtrar por palabras: " />
+					 <p:inputText value="#{rutasBean.busquedaRutasCosteras()}"></p:inputText>
+					 
+					 <div class="buscar">
+					 <p:commandButton  update=":filtro" value="Buscar" type="button" onclick="PF('dlg2').show();" />
+					 </div>
+					 
+					</h:panelGrid>
+					 
+					</p:fieldset>
+				</h:form>
+		<p:dialog header="Filtro de Mensajes" widgetVar="dlg2" modal="true" height="100" appendTo="@(body)">
+                  <h:form>
+                     <p:dataTable var="ruta" value="#{rutasBean.listaRutasCosteras()}">
+					    <p:column headerText="Distancia">
+					        <h:outputText value="#{ruta.distancia}" />
+					    </p:column>
+					 
+					    <p:column headerText="Duracion">
+					        <h:outputText value="#{ruta.duracion}" />
+					    </p:column>
+					</p:dataTable>
+					 
+				</h:form>	 
+        </p:dialog>  
+		</p:panelGrid>	
         </p:layoutUnit>
         
         <p:layoutUnit position="south">

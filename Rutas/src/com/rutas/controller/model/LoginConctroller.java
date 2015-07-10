@@ -10,6 +10,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.swing.text.StyledEditorKit.BoldAction;
 
 import org.primefaces.context.RequestContext;
 
@@ -146,6 +147,21 @@ public class LoginConctroller implements Serializable {
 		{
 			
 		}
+	}
+	
+	public boolean validaruser()
+	{
+		if (idusuarios!=-1)
+		{
+			
+			return true;
+		}
+		else
+		{
+			return false;
+		}
+		
+		
 	}
 
 }

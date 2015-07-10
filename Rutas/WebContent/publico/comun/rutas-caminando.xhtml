@@ -123,7 +123,7 @@
         		<p:calendar id="fecha" value="#{rutasBean.fecha}" showOn="button" />
 				</p:panelGrid>
    			    
-                <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+                <h:panelGrid columns="2" style="margin-bottom:10px" cellpadding="5">
         		<p:outputLabel for="console" value="Dificultad:" />
         		<p:selectOneMenu id="console" value="#{rutasBean.dificultad}" style="width:125px">
             	<f:selectItem itemLabel="" itemValue="" />
@@ -131,7 +131,10 @@
             	<f:selectItem itemLabel="Media" itemValue="Media" />
             	<f:selectItem itemLabel="Dificil" itemValue="Dificil" />	
         	</p:selectOneMenu>
-        	<p:commandButton value="Guardar" update=":rutascaminando msgs" actionListener="#{rutasBean.añadirRutaCaminando()}" styleClass="right"/>
+        	<h:outputLabel for="tipocalzado" value="Tipo de Calzado:" />
+			<p:inputText id="tipocalzado" value="#{rutasBean.tipocalzado}" required="tru"/>
+			<h:panelGroup></h:panelGroup>
+			<p:commandButton value="Guardar" update=":rutascaminando msgs" actionListener="#{rutasBean.añadirRutaCaminando()}" styleClass="right"/>
         	</h:panelGrid>
         	</h:form>
         	

@@ -78,26 +78,56 @@
      
 		</p:layoutUnit>
 		<p:layoutUnit position="center" >
-		
+		<p:panelGrid columns="1" styleClass="w100" columnClasses="w50,w50">
+		 <p:fieldset legend="Busca una Ruta" style="margin-bottom:20px">
+		     <h:panelGrid columns="2" cellpadding="5">
+					 <p:outputLabel value="Filtrar por palabras: " />
+					 <p:inputText value="#{rutasBean.busquedaRutasCaminando()}"></p:inputText>
+					 
+					 <div class="buscar">
+					 <p:commandButton  update=":filtro" value="Buscar" type="button" onclick="PF('dlg2').show();" />
+					 </div>
+					 
+					</h:panelGrid>
+		    </p:fieldset>
+		<p:fieldset legend="Lista de Rutas" style="margin-bottom:20px">
 			<h:form id="form">
-			    <p:dataList value="#{rutasBean.tablaRutasDesde()}" var="concejo">
-			        <f:facet name="header">
-			            Lista de Rutas
-			        </f:facet>
-			        #{concejo.nombre} 
-			        <p:dataTable value="#{concejo.listaRutas}" var="ruta">
-			        	<p:column headerText="distancia" width="50">
-			        	<h:outputText value="#{rutasBean.distancia}" />
+			    <p:dataList value="#{rutasBean.tablaRutasDesde()}" var="concejo" styleClass="w75">
+			         #{concejo.nombre} 
+			        <p:dataTable value="#{concejo.listaRutas}" var="ruta" styleClass="w75">
+			        	<p:column headerText="itinerario" width="50">
+			        	<h:outputText value="#{ruta.itinerario}" />
 			        	</p:column>
-			        	<p:column headerText="ubicacion"  width="50">
-			        	<h:outputText value="#{rutasBean.dificultad}" />
+			        	<p:column headerText="distancia"  width="50">
+			        	<h:outputText value="#{ruta.distancia}" />
+			        	</p:column>
+			        	<p:column headerText="dificultad"  width="50">
+			        	<h:outputText value="#{ruta.dificultad}" />
+			        	</p:column>
+			        	<p:column headerText="desnivel"  width="50">
+			        	<h:outputText value="#{ruta.desnivel}" />
+			        	</p:column>
+			        	<p:column headerText="descripcion"  width="50">
+			        	<h:outputText value="#{ruta.descripcion}" />
 			        	</p:column>
 		        		<p:column>
-    						<p:commandButton value="Apuntate" type="button" actionListener="#{Login.activarDialog()}"/>
+    						<p:growl id="message" showDetail="true" />
+ 
+						    <p:commandButton value="Apuntate" actionListener="#{rutasBean.apuntarse()}" update="message">
+						        <p:confirm header="Aviso de Confirmacion" message="Estas Seguro ?" icon="ui-icon-alert" />
+						    </p:commandButton>
+						 
+						    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+						        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+						        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+						    </p:confirmDialog>
 		   				</p:column>
 			      </p:dataTable> 
 			    </p:dataList>
 		    </h:form>
+		    </p:fieldset>
+		   
+		    </p:panelGrid>
         </p:layoutUnit>
         
         <p:layoutUnit position="south">

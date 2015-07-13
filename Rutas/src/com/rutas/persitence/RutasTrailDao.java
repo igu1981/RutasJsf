@@ -10,5 +10,6 @@ public interface RutasTrailDao extends GenericDao<RutasTrail>
 {
 	public List<RutasTrail> listaRutasTrail() ;
 	public List<RutasTrail> searchTrail(String filtBusqueda,boolean estado);
+	
 
 }

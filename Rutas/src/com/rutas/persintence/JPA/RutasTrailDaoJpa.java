@@ -33,5 +33,6 @@ public class RutasTrailDaoJpa extends GenericDaoJpa<RutasTrail> implements Rutas
 		
 		
 		return q.getResultList();
+		
 	}
 }

@@ -1,6 +1,7 @@
 package com.rutas.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
@@ -32,6 +33,7 @@ public class Usuarios implements Serializable{
 	public Usuarios() 
 	{
 		super();
+		listacarreras = new ArrayList<Carreras>();
 	}
 	//---------------------- Getters y Setters --------------------
 
@@ -86,6 +88,15 @@ public class Usuarios implements Serializable{
 
 	public void setListacarreras(List<Carreras> listacarreras) {
 		this.listacarreras = listacarreras;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Usuarios [usuariosid=" + usuariosid + ", username=" + username
+				+ ", password=" + password + ", listacarreras=" + listacarreras
+				+ "]";
 	}
 
 

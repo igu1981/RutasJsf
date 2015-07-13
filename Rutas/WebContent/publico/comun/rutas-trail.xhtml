@@ -102,7 +102,7 @@
             <p:commandButton  update=":tabla:traildialog" icon="ui-icon-search" value="View" oncomplete="PF('trailDialog').show()" />
        		 </f:facet>
 		</p:dataTable>
-		<p:dialog id="traildialog" header="Detalle Ruta" widgetVar="trailDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" appendTo="@(body)">
+		<p:dialog id="traildialog" header="Detalle Ruta" widgetVar="trailDialog" modal="true" showEffect="fade" hideEffect="fade" resizable="false" appendTo="@(body)" >
        				 <p:outputPanel id="trailDetail" style="text-align:center;">
 			            <p:panelGrid  columns="2" rendered="#{not empty rutasBean.selectedRutasTrail}" columnClasses="label,value">
 			                

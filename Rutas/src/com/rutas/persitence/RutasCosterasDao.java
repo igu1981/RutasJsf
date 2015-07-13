@@ -9,4 +9,5 @@ public interface RutasCosterasDao extends GenericDao<RutasCosteras>
 {
 
 	public List<RutasCosteras> listaRutasCosteras() ;
+	public List<RutasCosteras> searchcosteras(String filtBusqueda,boolean estado);
 }

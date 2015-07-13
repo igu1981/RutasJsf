@@ -2,15 +2,16 @@ package com.rutas.persintence.JPA;
 
 import java.util.Date;
 import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.TypedQuery;
-import org.apache.poi.ss.formula.functions.T;
+
 import com.rutas.generic.GenericDaoJpa;
 import com.rutas.modelo.Concejos;
 import com.rutas.persitence.ConcejosDao;
 
 @Stateless
-public class ConcejoDaoJpa extends GenericDaoJpa<T> implements ConcejosDao{
+public class ConcejoDaoJpa extends GenericDaoJpa<Concejos> implements ConcejosDao{
 
 	
 	@Override

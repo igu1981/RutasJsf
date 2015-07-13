@@ -30,6 +30,10 @@ public class Concejos implements Serializable{
 	
 	 @OneToMany(mappedBy="concejo")
 	 private List<Rutas> listaRutas;
+	 
+	 @OneToMany(mappedBy="concejos")
+	 private List<Carreras> listaCarreras;
+	 
 
 	//--------------------- Constructor ----------------------
 	
@@ -67,6 +71,14 @@ public class Concejos implements Serializable{
 	public String toString() {
 		return "Concejos [concejosid=" + concejoid + ", nombre=" + nombre
 				+ ", listaRutas=" + listaRutas + "]";
+	}
+
+	public List<Carreras> getListaCarreras() {
+		return listaCarreras;
+	}
+
+	public void setListaCarreras(List<Carreras> listaCarreras) {
+		this.listaCarreras = listaCarreras;
 	}
 	
 

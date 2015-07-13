@@ -11,15 +11,19 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import com.rutas.modelo.Carreras;
 import com.rutas.modelo.Concejos;
 import com.rutas.modelo.Rutas;
 import com.rutas.modelo.RutasCaminado;
 import com.rutas.modelo.RutasCosteras;
 import com.rutas.modelo.RutasTrail;
+import com.rutas.modelo.Usuarios;
+import com.rutas.persitence.CarrerasDao;
 import com.rutas.persitence.ConcejosDao;
 import com.rutas.persitence.RutasCaminandoDao;
 import com.rutas.persitence.RutasCosterasDao;
 import com.rutas.persitence.RutasTrailDao;
+import com.rutas.persitence.UsuarioDao;
 
 
 
@@ -41,12 +45,15 @@ public class RutasController implements Serializable {
 	private int duracion;
 	private Date fecha;
 	private String tipocalzado;
+	private String filtBusqueda;
+	boolean estado;
 	private Rutas rutaselecionada;
 	private Rutas selectedRutas;
 	private RutasTrail selectedRutasTrail;
 	private List<RutasCosteras> filteredCosteras;
 	private LoginConctroller loginBean;
-	
+	private Carreras carreras;
+	private Usuarios usuarios;
 	
 	@EJB
 	protected RutasCaminandoDao rutascaminandoDao;
@@ -56,6 +63,11 @@ public class RutasController implements Serializable {
 	protected RutasTrailDao rutastrailDao;
 	@EJB
 	protected ConcejosDao concejosDao;
+	@EJB
+	protected CarrerasDao carrerasDao;
+	@EJB
+	protected UsuarioDao usuarioDao;
+
 
 	
 	
@@ -71,6 +83,8 @@ public class RutasController implements Serializable {
 		duracion=0;
 		itinerario="";
 		tipocalzado="";
+		
+		filtBusqueda="";
 		
 		
 	}
@@ -242,6 +256,43 @@ public class RutasController implements Serializable {
 		this.filteredCosteras = filteredCosteras;
 	}
 
+	public Carreras getCarreras() {
+		return carreras;
+	}
+
+
+	public void setCarreras(Carreras carreras) {
+		this.carreras = carreras;
+	}
+
+	public Usuarios getUsuarios() {
+		return usuarios;
+	}
+
+
+	public void setUsuarios(Usuarios usuarios) {
+		this.usuarios = usuarios;
+	}
+
+	public String getFiltBusqueda() {
+		return filtBusqueda;
+	}
+
+
+	public void setFiltBusqueda(String filtBusqueda) {
+		this.filtBusqueda = filtBusqueda;
+	}
+
+	public boolean isEstado() {
+		return estado;
+	}
+
+
+	public void setEstado(boolean estado) {
+		this.estado = estado;
+	}
+ 
+
 	
 	//--------------------- Metodos ----------------------
 	
@@ -269,6 +320,12 @@ public class RutasController implements Serializable {
 	{
 		return concejosDao.rutasDesde(fecha);
 	}
+	
+	public List<Concejos> tablaCarrerasDesde()
+	{
+		return carrerasDao.carrerasDesde(fecha);
+	}
+	
 
 	public List<Concejos> concejoFecha()
 	{
@@ -301,6 +358,7 @@ public class RutasController implements Serializable {
 	{
 		return "/publico/comun/rutas-trail.xhtml?faces-redirect=true";
 	}
+	
 	
 	public String añadirRutaCaminando()
 	{
@@ -402,12 +460,22 @@ public class RutasController implements Serializable {
 	
 	public void apuntarse() 
 	{
-        addCorredor("Inscrito con exito", "Gracias por todo!!");
         boolean user=loginBean.validaruser();
         if(user)
         {
+        	 Usuarios u=usuarioDao.find(new Long(loginBean.getIdusuarios()));
+        	 carreras.addListausuario(u);
+        	 
+        	 try {
+        		 carrerasDao.update(carreras);
+        	 } catch (Exception e) {
+        		 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_FATAL, "Error!" ," Ya estás apuntado!!."));
+        		 return;
+        	 }
+        	 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", " Usuario Añadido!!."));
         	
         }
+        
         
         
     }
@@ -416,13 +484,37 @@ public class RutasController implements Serializable {
         FacesMessage message = new FacesMessage(FacesMessage.SEVERITY_INFO, summary, detail);
         FacesContext.getCurrentInstance().addMessage(null, message);
     }
+	
+	public List<Carreras> search() 
+	  {
+		  
+	    	List<Carreras> temp=carrerasDao.searchDao(filtBusqueda,estado, fecha); 
+	        estado=true;
+	        return temp;
+	       
+	   }
+	
+	public List<RutasCaminado> searchcaminando() 
+	  {
+		  
+	    	List<RutasCaminado> temp=rutascaminandoDao.searchcaminando(filtBusqueda,estado); 
+	        estado=true;
+	        return temp;
+	       
+	   }
+	public List<RutasCosteras> searchcosteras() 
+	  {
+		  
+	    	List<RutasCosteras> temp=rutascosterasDao.searchcosteras(filtBusqueda,estado); 
+	        estado=true;
+	        return temp;
+	       
+	   }
 
-	
-	
-	
 
-	
-	
+
+
+
 	
 }
 

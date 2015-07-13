@@ -10,8 +10,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
-import javax.swing.text.StyledEditorKit.BoldAction;
-
 import org.primefaces.context.RequestContext;
 
 
@@ -145,7 +143,12 @@ public class LoginConctroller implements Serializable {
 		}
 		else
 		{
-			
+			FacesContext.getCurrentInstance().addMessage(
+                    null,
+                    new FacesMessage(FacesMessage.SEVERITY_WARN,
+                            "Incorrecto No estas Logeado",
+                            "Por favor introduce el Usuario y Password"));
+            
 		}
 	}
 	

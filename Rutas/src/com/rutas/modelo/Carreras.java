@@ -1,6 +1,7 @@
 package com.rutas.modelo;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -9,7 +10,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 
@@ -28,10 +32,14 @@ public class Carreras implements Serializable{
 	private int duracion;
 	private String dificultad;
 	private int desnivel;
+	@Temporal(TemporalType.TIMESTAMP)
 	private Date fechalimite;
 	private String ubicacion;
 	private String descripcion;
 	
+	@ManyToOne 
+	@JoinColumn(name="concejosid")
+	private Concejos concejos;
 	
 	@ManyToMany
 	@JoinTable(name="carreras_usuarios",
@@ -47,6 +55,7 @@ public class Carreras implements Serializable{
 	public Carreras() 
 	{
 		super();
+		listausuarios = new ArrayList<Usuarios>();
 	}
 
 	//---------------------- Getters y Setters --------------------
@@ -146,6 +155,20 @@ public class Carreras implements Serializable{
 
 	public void setListausuarios(List<Usuarios> listausuarios) {
 		this.listausuarios = listausuarios;
+	}
+
+	public Concejos getConcejos() {
+		return concejos;
+	}
+
+	public void setConcejos(Concejos concejos) {
+		this.concejos = concejos;
+	}
+	
+	public void addListausuario(Usuarios usuario)
+	{
+		listausuarios.add(usuario);
+		
 	}
 
 

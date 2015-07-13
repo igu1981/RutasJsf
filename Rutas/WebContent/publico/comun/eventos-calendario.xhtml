@@ -81,50 +81,83 @@
 		<p:panelGrid columns="1" styleClass="w100" columnClasses="w50,w50">
 		 <p:fieldset legend="Busca una Ruta" style="margin-bottom:20px">
 		     <h:panelGrid columns="2" cellpadding="5">
-					 <p:outputLabel value="Filtrar por palabras: " />
-					 <p:inputText value="#{rutasBean.busquedaRutasCaminando()}"></p:inputText>
+					<h:form>
+					 <p:outputLabel value="Busca Carrera por Ubicacion: " />
+					 <p:inputText value="#{rutasBean.filtBusqueda}"></p:inputText>
 					 
 					 <div class="buscar">
-					 <p:commandButton  update=":filtro" value="Buscar" type="button" onclick="PF('dlg2').show();" />
+					 <p:commandButton  update=":dialogcarreras" value="Buscar"  oncomplete="PF('dialogcarrerasdlg').show();" />
 					 </div>
-					 
+					 </h:form>
+					 <p:dialog  id="dialogcarreras" header="Carreras Encontradas " widgetVar="dialogcarrerasdlg" minHeight="40" appendTo="@(body)" modal="true">
+					   <p:dataTable var="carreras" value="#{rutasBean.search()}">
+						    <p:column headerText="Ubicacion">
+						        <h:outputText value="#{carreras.ubicacion}" />
+						    </p:column>
+						 
+						    <p:column headerText="Distancia">
+						        <h:outputText value="#{carreras.distancia}" />
+						    </p:column>
+						 
+						    <p:column headerText="Duracion">
+						        <h:outputText value="#{carreras.duracion}" />
+						    </p:column>
+						 
+						    <p:column headerText="Concejo">
+						        <h:outputText value="#{carreras.concejos.nombre}" />
+						    </p:column>
+						    <p:column>
+ 
+						    	<p:commandButton value="Apuntate" update=":confirmCarreraDlg" oncomplete="confirmCarrera.show()">
+						    		<f:setPropertyActionListener target="#{rutasBean.carreras}" value="#{carreras}" />
+						    	</p:commandButton>
+		   					</p:column>
+		   				
+						</p:dataTable>
+					</p:dialog>
 					</h:panelGrid>
 		    </p:fieldset>
 		<p:fieldset legend="Lista de Rutas" style="margin-bottom:20px">
+			<p:growl id="message" showDetail="true" />
+		
 			<h:form id="form">
-			    <p:dataList value="#{rutasBean.tablaRutasDesde()}" var="concejo" styleClass="w75">
+			    <p:dataList value="#{rutasBean.tablaCarrerasDesde()}" var="concejo" styleClass="w75">
 			         #{concejo.nombre} 
-			        <p:dataTable value="#{concejo.listaRutas}" var="ruta" styleClass="w75">
+			        <p:dataTable value="#{concejo.listaCarreras}" var="carreras" styleClass="w75">
 			        	<p:column headerText="itinerario" width="50">
-			        	<h:outputText value="#{ruta.itinerario}" />
+			        	<h:outputText value="#{carreras.itinerario}" />
 			        	</p:column>
 			        	<p:column headerText="distancia"  width="50">
-			        	<h:outputText value="#{ruta.distancia}" />
+			        	<h:outputText value="#{carreras.distancia}" />
 			        	</p:column>
 			        	<p:column headerText="dificultad"  width="50">
-			        	<h:outputText value="#{ruta.dificultad}" />
+			        	<h:outputText value="#{carreras.dificultad}" />
 			        	</p:column>
 			        	<p:column headerText="desnivel"  width="50">
-			        	<h:outputText value="#{ruta.desnivel}" />
+			        	<h:outputText value="#{carreras.desnivel}" />
 			        	</p:column>
 			        	<p:column headerText="descripcion"  width="50">
-			        	<h:outputText value="#{ruta.descripcion}" />
+			        	<h:outputText value="#{carreras.descripcion}" />
 			        	</p:column>
 		        		<p:column>
-    						<p:growl id="message" showDetail="true" />
  
-						    <p:commandButton value="Apuntate" actionListener="#{rutasBean.apuntarse()}" update="message">
-						        <p:confirm header="Aviso de Confirmacion" message="Estas Seguro ?" icon="ui-icon-alert" />
+						    <p:commandButton value="Apuntate" update=":confirmCarreraDlg" oncomplete="confirmCarrera.show()">
+						    	<f:setPropertyActionListener target="#{rutasBean.carreras}" value="#{carreras}" />
 						    </p:commandButton>
-						 
-						    <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
-						        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
-						        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
-						    </p:confirmDialog>
 		   				</p:column>
 			      </p:dataTable> 
 			    </p:dataList>
 		    </h:form>
+		    
+		    <p:dialog id="confirmCarreraDlg" showEffect="fade" hideEffect="fade" widgetVar="confirmCarrera" appendTo="@(body)" modal="true">
+		    	<h:form>
+			    	<h:outputText value="Estas Seguro ?" />
+			        <p:commandButton process="@this" value="Si" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" action="#{rutasBean.apuntarse()}" oncomplete="confirmCarrera.hide()"
+			        				 update=":message"/>
+			        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" oncomplete="confirmCarrera.hide()"/>
+			    </h:form>
+		    </p:dialog>
+		    
 		    </p:fieldset>
 		   
 		    </p:panelGrid>

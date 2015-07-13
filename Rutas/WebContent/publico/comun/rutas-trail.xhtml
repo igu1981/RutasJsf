@@ -73,7 +73,37 @@
 			</p:panelGrid>  
 		</p:layoutUnit>
 		<p:layoutUnit position="center" >
-		
+		<p:fieldset legend="Busca una Ruta" style="margin-bottom:20px">
+		     <h:panelGrid columns="2" cellpadding="5">
+					<h:form>
+					 <p:outputLabel value="Busca Ruta Trail: " />
+					 <p:inputText value="#{rutasBean.filtBusqueda}"></p:inputText>
+					 
+					 <div class="buscar">
+					 <p:commandButton  update=":dialogtrail" value="Buscar"  oncomplete="PF('dialogtraildlg').show();" />
+					 </div>
+					 </h:form>
+					 <p:dialog  id="dialogtrail" header="Rutas Encontradas " widgetVar="dialogtraildlg" minHeight="40" appendTo="@(body)" modal="true">
+					   <p:dataTable var="trail" value="#{rutasBean.searchtrail()}">
+						    <p:column headerText="Ubicacion">
+						        <h:outputText value="#{trail.ubicacion}" />
+						    </p:column>
+						 
+						    <p:column headerText="Distancia">
+						        <h:outputText value="#{trail.distancia}" />
+						    </p:column>
+						 
+						    <p:column headerText="Duracion">
+						        <h:outputText value="#{trail.duracion}" />
+						    </p:column>
+						 
+						    <p:column headerText="Concejo">
+						        <h:outputText value="#{trail.descripcion}" />
+						    </p:column>
+						</p:dataTable>
+					</p:dialog>
+					</h:panelGrid>
+		    </p:fieldset>
     				
 		<p:panelGrid columns="2" styleClass="w100" columnClasses="w50,w50">
 		<p:fieldset legend="Rutas Trail" style="margin-bottom:20px" >
@@ -166,37 +196,7 @@
         	
 		</p:fieldset> 
 		</p:panelGrid>
-		<p:panelGrid columns="2">
-		<h:form id="filtro">
-					<p:fieldset legend="Filtro de Busqueda" style="margin-bottom:20px">
-					
-				     <h:panelGrid columns="2" cellpadding="5">
-					 <p:outputLabel value="Filtrar por palabras: " />
-					 <p:inputText value="#{rutasBean.busquedaRutasCosteras()}"></p:inputText>
-					 
-					 <div class="buscar">
-					 <p:commandButton  update=":filtro" value="Buscar" type="button" onclick="PF('dlg2').show();" />
-					 </div>
-					 
-					</h:panelGrid>
-					 
-					</p:fieldset>
-				</h:form>
-		<p:dialog header="Filtro de Mensajes" widgetVar="dlg2" modal="true" height="100" appendTo="@(body)">
-                  <h:form>
-                     <p:dataTable var="ruta" value="#{rutasBean.listaRutasCosteras()}">
-					    <p:column headerText="Distancia">
-					        <h:outputText value="#{ruta.distancia}" />
-					    </p:column>
-					 
-					    <p:column headerText="Duracion">
-					        <h:outputText value="#{ruta.duracion}" />
-					    </p:column>
-					</p:dataTable>
-					 
-				</h:form>	 
-        </p:dialog>  
-		</p:panelGrid>	
+		
         </p:layoutUnit>
         
         <p:layoutUnit position="south">

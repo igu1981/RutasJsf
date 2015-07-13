@@ -510,7 +510,15 @@ public class RutasController implements Serializable {
 	        return temp;
 	       
 	   }
-
+	
+	public List<RutasTrail> searchtrail() 
+	  {
+		  
+	    	List<RutasTrail> temp=rutastrailDao.searchTrail(filtBusqueda,estado); 
+	        estado=true;
+	        return temp;
+	       
+	   }
 
 
 

@@ -11,6 +11,13 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+
+import org.primefaces.event.map.OverlaySelectEvent;
+import org.primefaces.model.map.DefaultMapModel;
+import org.primefaces.model.map.LatLng;
+import org.primefaces.model.map.MapModel;
+import org.primefaces.model.map.Marker;
+
 import com.rutas.modelo.Carreras;
 import com.rutas.modelo.Concejos;
 import com.rutas.modelo.Rutas;
@@ -54,6 +61,10 @@ public class RutasController implements Serializable {
 	private LoginConctroller loginBean;
 	private Carreras carreras;
 	private Usuarios usuarios;
+	private String search;
+	
+	private MapModel advancedModel;
+	private Marker marker;
 	
 	@EJB
 	protected RutasCaminandoDao rutascaminandoDao;
@@ -95,6 +106,15 @@ public class RutasController implements Serializable {
 	{
 		FacesContext ctx = FacesContext.getCurrentInstance();
 		loginBean = (LoginConctroller) ctx.getApplication().getELResolver().getValue(ctx.getELContext(), null, "Login");
+		
+		advancedModel = new DefaultMapModel();
+		//Shared coordinates
+        LatLng coord1 = new LatLng(41.2956695, -5.3443520);
+        LatLng coord2 = new LatLng(42.0936717, -6.1380863);
+      //Icons and Data
+        advancedModel.addOverlay(new Marker(coord1, "Vadillo-de-la-Guarena"));
+        advancedModel.addOverlay(new Marker(coord2, "Una-de-Quintana"));
+        
 	}
 
 	//--------------------- Getters y Setters ----------------------
@@ -291,6 +311,34 @@ public class RutasController implements Serializable {
 	public void setEstado(boolean estado) {
 		this.estado = estado;
 	}
+	public String getSearch() {
+		return search;
+	}
+
+
+	public void setSearch(String search) {
+		this.search = search;
+	}
+	public MapModel getAdvancedModel() {
+		return advancedModel;
+	}
+
+
+	public void setAdvancedModel(MapModel advancedModel) {
+		this.advancedModel = advancedModel;
+	}
+
+
+	public Marker getMarker() {
+		return marker;
+	}
+
+
+	public void setMarker(Marker marker) {
+		this.marker = marker;
+	}
+
+
  
 
 	
@@ -357,6 +405,14 @@ public class RutasController implements Serializable {
 	public String rutasTrail()
 	{
 		return "/publico/comun/rutas-trail.xhtml?faces-redirect=true";
+	}
+	public String rutasmapa()
+	{
+		return "/publico/comun/ruta-mapa.xhtml?faces-redirect=true";
+	}
+	public String zonas()
+	{
+		return "/publico/comun/conecta-gente.xhtml?faces-redirect=true";
 	}
 	
 	
@@ -520,6 +576,27 @@ public class RutasController implements Serializable {
 	        
 	       
 	   }
+	public List<Rutas> filtrobusqueda() 
+	  {
+		  
+	    	List<Rutas> temp=rutascaminandoDao.filtrobusqueda(filtBusqueda,estado); 
+	        estado=true;
+	        return temp;
+	        
+	       
+	   }
+	 public void onMarkerSelect(OverlaySelectEvent event) {
+	        marker = (Marker) event.getOverlay();
+	    }
+	 
+	 public void addcontacto(){
+	       
+	    }
+
+
+	
+	
+
 
 
 

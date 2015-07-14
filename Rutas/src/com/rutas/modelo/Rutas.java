@@ -44,6 +44,8 @@ public abstract class Rutas implements Serializable {
 	private String ubicacion;
 	private String descripcion;
 	private String discriminador;
+	private Double Latitud;
+	private Double Longitud;
 	
 	
 	 @ManyToOne 
@@ -176,6 +178,26 @@ public abstract class Rutas implements Serializable {
 
 	public void setDiscriminador(String discriminador) {
 		this.discriminador = discriminador;
+	}
+
+
+	public Double getLatitud() {
+		return Latitud;
+	}
+
+
+	public void setLatitud(Double latitud) {
+		Latitud = latitud;
+	}
+
+
+	public Double getLongitud() {
+		return Longitud;
+	}
+
+
+	public void setLongitud(Double longitud) {
+		Longitud = longitud;
 	}  
 		
    

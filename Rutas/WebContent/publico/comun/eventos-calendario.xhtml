@@ -34,7 +34,7 @@
 					<p:commandButton id="btnMapa" value="Organiza" type="button" />
 		   			<p:overlayPanel id="ovpmapa" for="btnMapa" hideEffect="fade" appendToBody="true">
 		    			<h:form>
-		        			<p:commandLink id="rutas-mapa" value="Rutas en el Mapa" />
+		        			 <p:commandLink id="rutas-mapa" value="Rutas en el Mapa" action="#{rutasBean.rutasmapa()}"/>
 		   				</h:form>
 		   			</p:overlayPanel>
 				</h:panelGroup>
@@ -42,7 +42,7 @@
 					<p:commandButton id="btnZonas" value="Conecta" type="button" />
 		   			<p:overlayPanel id="ovpzonas" for="btnZonas" hideEffect="fade" appendToBody="true">
 		    			<h:form>
-		        			<p:commandLink id="zonas" value="Queda con gente para ir" />
+		        			<p:commandLink id="zonas" value="Queda con gente para ir" action="#{rutasBean.zonas()}"/>
 		   				</h:form>
 		   			</p:overlayPanel>
 				</h:panelGroup>

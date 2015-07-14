@@ -6,7 +6,10 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 
@@ -24,6 +27,18 @@ public class Usuarios implements Serializable{
 	
 	@ManyToMany(mappedBy="listausuarios")
 	private List<Carreras> listacarreras;
+	
+	 @OneToOne
+	 private Contactos contacto;
+	 
+	 @ManyToMany
+		@JoinTable(name="usuarios_equipo",
+		joinColumns={
+		@JoinColumn(name="usuariosid", nullable=false)
+		}
+		, inverseJoinColumns={
+		@JoinColumn(name="equipoid", nullable=false)})
+		private List<Equipo> listaequipos;
 	
 	
 	
@@ -97,6 +112,30 @@ public class Usuarios implements Serializable{
 		return "Usuarios [usuariosid=" + usuariosid + ", username=" + username
 				+ ", password=" + password + ", listacarreras=" + listacarreras
 				+ "]";
+	}
+
+
+
+	public Contactos getContacto() {
+		return contacto;
+	}
+
+
+
+	public void setContacto(Contactos contacto) {
+		this.contacto = contacto;
+	}
+
+
+
+	public List<Equipo> getListaequipos() {
+		return listaequipos;
+	}
+
+
+
+	public void setListaequipos(List<Equipo> listaequipos) {
+		this.listaequipos = listaequipos;
 	}
 
 

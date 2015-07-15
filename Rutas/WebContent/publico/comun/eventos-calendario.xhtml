@@ -23,9 +23,9 @@
 		   			<p:overlayPanel id="ovrutas" for="btnRutas" hideEffect="fade" appendToBody="true">
 		    			<h:form >
 		    		        <p:panelGrid columns="1" > 
-		    			    <p:commandLink id="rutasCa" value="Rutas Caminando" />
-		        			<p:commandLink id="rutasCOS" value="Rutas Costeras" />
-		        			<p:commandLink id="rutasTr" value="Rutas Trail" />
+		    			   <p:commandLink id="rutasCa" value="Rutas Caminando" action="#{rutasBean.rutasCaminando()}"/>
+		        			<p:commandLink id="rutasCOS" value="Rutas Costeras" action="#{rutasBean.rutasCosteras()}"/>
+		        			<p:commandLink id="rutasTr" value="Rutas Trail" action="#{rutasBean.rutasTrail()}"/>
 		        			</p:panelGrid>
 		   				</h:form>
 		   			</p:overlayPanel>
@@ -42,7 +42,10 @@
 					<p:commandButton id="btnZonas" value="Conecta" type="button" />
 		   			<p:overlayPanel id="ovpzonas" for="btnZonas" hideEffect="fade" appendToBody="true">
 		    			<h:form>
+		    			 <p:panelGrid columns="1" > 
 		        			<p:commandLink id="zonas" value="Queda con gente para ir" action="#{rutasBean.zonas()}"/>
+		        			<p:commandLink id="equipo" value="Unete a un equipo" action="#{rutasBean.uneteequipo()}"/>
+		        			</p:panelGrid>
 		   				</h:form>
 		   			</p:overlayPanel>
 				</h:panelGroup>

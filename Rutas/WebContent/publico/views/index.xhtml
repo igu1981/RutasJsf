@@ -42,8 +42,10 @@
 					<p:commandButton id="btnZonas" value="Conecta" type="button" />
 		   			<p:overlayPanel id="ovpzonas" for="btnZonas" hideEffect="fade" appendToBody="true">
 		    			<h:form>
-		        			
+		        			 <p:panelGrid columns="1">
 		        			<p:commandLink id="zonas" value="Queda con gente para ir" action="#{rutasBean.zonas()}"/>
+		        			<p:commandLink id="equipo" value="Unete a un equipo" action="#{rutasBean.uneteequipo()}"/>
+		        			</p:panelGrid>
 		   				</h:form>
 		   			</p:overlayPanel>
 				</h:panelGroup>

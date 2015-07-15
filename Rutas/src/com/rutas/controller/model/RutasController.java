@@ -20,6 +20,7 @@ import org.primefaces.model.map.Marker;
 
 import com.rutas.modelo.Carreras;
 import com.rutas.modelo.Concejos;
+import com.rutas.modelo.Equipo;
 import com.rutas.modelo.Rutas;
 import com.rutas.modelo.RutasCaminado;
 import com.rutas.modelo.RutasCosteras;
@@ -27,6 +28,7 @@ import com.rutas.modelo.RutasTrail;
 import com.rutas.modelo.Usuarios;
 import com.rutas.persitence.CarrerasDao;
 import com.rutas.persitence.ConcejosDao;
+import com.rutas.persitence.EquipoDao;
 import com.rutas.persitence.RutasCaminandoDao;
 import com.rutas.persitence.RutasCosterasDao;
 import com.rutas.persitence.RutasTrailDao;
@@ -62,6 +64,10 @@ public class RutasController implements Serializable {
 	private Carreras carreras;
 	private Usuarios usuarios;
 	private String search;
+	private String nombre;
+	private int numero;
+	private String lugar;
+	private Usuarios user;
 	
 	private MapModel advancedModel;
 	private Marker marker;
@@ -78,6 +84,8 @@ public class RutasController implements Serializable {
 	protected CarrerasDao carrerasDao;
 	@EJB
 	protected UsuarioDao usuarioDao;
+	@EJB
+	protected EquipoDao equipoDao;
 
 
 	
@@ -94,8 +102,10 @@ public class RutasController implements Serializable {
 		duracion=0;
 		itinerario="";
 		tipocalzado="";
-		
 		filtBusqueda="";
+		nombre="";
+		lugar="";
+		numero=0;
 		
 		
 	}
@@ -339,7 +349,42 @@ public class RutasController implements Serializable {
 	}
 
 
- 
+	public String getNombre() {
+		return nombre;
+	}
+
+
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+	public int getNumero() {
+		return numero;
+	}
+
+
+	public void setNumero(int numero) {
+		this.numero = numero;
+	}
+
+
+	public String getLugar() {
+		return lugar;
+	}
+
+
+	public void setLugar(String lugar) {
+		this.lugar = lugar;
+	}
+
+	public Usuarios getUser() {
+		return user;
+	}
+
+
+	public void setUser(Usuarios user) {
+		this.user = user;
+	}
+	 
 
 	
 	//--------------------- Metodos ----------------------
@@ -384,6 +429,10 @@ public class RutasController implements Serializable {
 	{
 		return rutascaminandoDao.findAll();
 	}
+	public List<Usuarios> listaUsuarios()
+	{
+		return usuarioDao.findAll();
+	}
 
 	public List<RutasCosteras>listaRutasCosteras()
 	{
@@ -393,6 +442,11 @@ public class RutasController implements Serializable {
 	public List<RutasTrail>listaRutasTrail()
 	{
 		return rutastrailDao.findAll();
+	}
+	
+	public List<Equipo>listaEquipo()
+	{
+		return equipoDao.findAll();
 	}
 	public String rutasCaminando()
 	{
@@ -476,10 +530,43 @@ public class RutasController implements Serializable {
 		return "/publico/comun/rutas-caminando.xhtml?faces-redirect=true";
 	}
 	
+	public String uneteequipo()
+	{
+		return "/publico/comun/unete-equipo.xhtml?faces-redirect=true";
+	}
+	public String addEquipo()
+	{
+		Equipo e=new Equipo();
+		e.setNombre(nombre);
+		e.setNumero_miembros(numero);
+		e.setLugar(lugar);
+		
+		equipoDao.create(e);
+		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Info", "Equipo Añadido!!."));
+		nombre="";
+		numero=0;
+		lugar="";
+		
+		return "/publico/comun/unete-equipo.xhtml?faces-redirect=true";
+	}
+	
 	public String busquedaRutasCosteras()
 	{
 		return "/publico/comun/rutas-costeras.xhtml?faces-redirect=true";
 	}
+	public void addcontacto()
+	 {
+		 boolean usr=loginBean.validaruser();
+	        if(usr)
+	        {
+		       Usuarios u=usuarioDao.find(new Long(loginBean.getIdusuarios()));
+		       u.getListaamistad().add(user);
+		       usuarioDao.update(u);
+	        }
+		       
+		       
+	       
+	 }
 
 	public String añadirTrail()
 	{
@@ -576,6 +663,15 @@ public class RutasController implements Serializable {
 	        
 	       
 	   }
+	public List<Equipo> searchunete() 
+	  {
+		  
+	    	List<Equipo> temp=equipoDao.searchunete(filtBusqueda,estado); 
+	        estado=true;
+	        return temp;
+	        
+	       
+	   }
 	public List<Rutas> filtrobusqueda() 
 	  {
 		  
@@ -588,10 +684,14 @@ public class RutasController implements Serializable {
 	 public void onMarkerSelect(OverlaySelectEvent event) {
 	        marker = (Marker) event.getOverlay();
 	    }
+
+
 	 
-	 public void addcontacto(){
-	       
-	    }
+
+
+	
+
+	
 
 
 	

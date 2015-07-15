@@ -1,4 +1,14 @@
-usuariosid,username,password
-1,ivan,admin
-2,alberto,alberto
-3,jose,jose
+rutasid,itinerario,distancia,duracion,dificultad,desnivel,fecha,ubicacion,descripcion,discriminador,latitud,longitud,concejo_concejoid,usuarios_usuariosid
+1,valdes,5,1,facil,250,2015-07-15,valdes,facil,caminando,NULL,NULL,1,1
+2,gijon,9,2,media,400,2015-08-01,gijon,"entrenar previamente",trail,NULL,NULL,2,2
+3,somiedo,20,3,dificil,600,2015-09-25,somiedo,"entrenar previamente",trail,NULL,NULL,5,3
+4,oviedo,9,2,media,450,2015-07-25,oviedo,facil,caminando,NULL,NULL,10,1
+5,villaviciosa,7,1,facil,250,2015-09-15,villaviciosa,facil,costera,NULL,NULL,11,2
+6,luarca,6,1,facil,250,2015-08-15,luarca,facil,caminando,NULL,NULL,12,1
+7,aviles,10,2,media,400,2015-09-21,aviles,"entrenar previamente",costera,NULL,NULL,8,1
+8,potes,17,3,dificil,600,2015-09-13,potes,"entrenar previamente",trail,NULL,NULL,6,2
+9,grado,11,2,media,450,2015-10-25,grado,facil,caminando,NULL,NULL,10,2
+10,gijon,8,1,facil,250,2015-11-18,gijon,facil,costera,NULL,NULL,2,1
+11,"pola siero",7,3,media,400,2015-08-13,"pola siero","entrenar previamente",caminando,NULL,NULL,7,1
+12,llanes,11,2,facil,200,2015-10-05,llanes,facil,costera,NULL,NULL,3,2
+13,somiedo,18,1,dificil,600,2015-11-08,somiedo,"entrenar previamente",trail,NULL,NULL,5,1

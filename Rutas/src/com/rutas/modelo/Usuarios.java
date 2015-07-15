@@ -28,8 +28,10 @@ public class Usuarios implements Serializable{
 	@ManyToMany(mappedBy="listausuarios")
 	private List<Carreras> listacarreras;
 	
-	 @OneToOne
+	 @OneToOne(mappedBy="usuario")
 	 private Contactos contacto;
+	 
+	 
 	 
 	 @ManyToMany
 		@JoinTable(name="usuarios_equipo",
@@ -39,6 +41,15 @@ public class Usuarios implements Serializable{
 		, inverseJoinColumns={
 		@JoinColumn(name="equipoid", nullable=false)})
 		private List<Equipo> listaequipos;
+	 
+	 @ManyToMany
+		@JoinTable(name="usuarios_usuarios",
+		joinColumns={
+		@JoinColumn(name="usuariosid", nullable=false)
+		}
+		, inverseJoinColumns={
+		@JoinColumn(name="userunidos", nullable=false)})
+		private List<Usuarios> listaamistad;
 	
 	
 	
@@ -49,6 +60,8 @@ public class Usuarios implements Serializable{
 	{
 		super();
 		listacarreras = new ArrayList<Carreras>();
+		listaamistad=new ArrayList<Usuarios>();
+		listaequipos=new ArrayList<Equipo>();
 	}
 	//---------------------- Getters y Setters --------------------
 
@@ -136,6 +149,18 @@ public class Usuarios implements Serializable{
 
 	public void setListaequipos(List<Equipo> listaequipos) {
 		this.listaequipos = listaequipos;
+	}
+
+
+
+	public List<Usuarios> getListaamistad() {
+		return listaamistad;
+	}
+
+
+
+	public void setListaamistad(List<Usuarios> listaamistad) {
+		this.listaamistad = listaamistad;
 	}
 
 
